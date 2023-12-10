@@ -1,6 +1,9 @@
 package com.mysite.sbb;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +28,12 @@ class SbbApplicationTests {
 		q2.setContent("id는 자동으로 생성되나요?");
 		q2.setCreateDate(LocalDateTime.now());
 		this.questionRepository.save(q2); // 두번째 질문 저장
+	}
+
+	@Test
+	void findAll() {
+		List<Question> all = this.questionRepository.findAll();
+		Question q = all.get(0);
+		assertEquals("sbb가 무엇인가요?", q.getSubject());
 	}
 }
