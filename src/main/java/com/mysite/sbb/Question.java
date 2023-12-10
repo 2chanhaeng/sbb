@@ -25,5 +25,6 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @CreatedDate
     private LocalDateTime createDate;
 }
