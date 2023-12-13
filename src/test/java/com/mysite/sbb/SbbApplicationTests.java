@@ -71,5 +71,11 @@ class SbbApplicationTests {
 		Question q = this.questionRepository.findBySubject(this.q1subject);
 		assertEquals(this.getPrevLastId() + 1, q.getId());
 	}
+
+	@Test
+	void findBySubjectAndContent() {
+		Question q = this.questionRepository.findBySubjectAndContent(
+				this.q1subject, this.q1content);
+		assertEquals(this.getPrevLastId() + 1, q.getId());
 	}
 }
