@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,24 +43,13 @@ class SbbApplicationTests {
 	@BeforeEach
 	void setup() {
 		this.questionRepository.deleteAll();
-		Question q1 = new Question();
-		q1.setSubject(this.q1subject);
-		q1.setContent(this.q1content);
-		q1.setCreateDate(LocalDateTime.now());
+		Question q1 = new Question(this.q1subject, this.q1content);
 		this.questionRepository.save(q1); // 첫번째 질문 저장
 
-		Question q2 = new Question();
-		q2.setSubject(this.q2subject);
-		q2.setContent(this.q2content);
-		q2.setCreateDate(LocalDateTime.now());
-		q2.setAnswerList(new ArrayList<Answer>()); // 두번째 질문에 답변 추가
+		Question q2 = new Question(this.q2subject, this.q2content);
 		this.questionRepository.save(q2); // 두번째 질문 저장
 
-		Answer a2 = new Answer();
-		a2.setQuestion(q2);
-		a2.setContent(this.a2content);
-		a2.setCreateDate(LocalDateTime.now());
-		q2.getAnswerList().add(a2);
+		Answer a2 = new Answer(this.a2content, q2);
 		this.answerRepository.save(a2); // 두번째 질문에 답변 저장
 	}
 
