@@ -5,9 +5,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,12 +50,14 @@ class SbbApplicationTests {
 		q2.setSubject(this.q2subject);
 		q2.setContent(this.q2content);
 		q2.setCreateDate(LocalDateTime.now());
+		q2.setAnswerList(new ArrayList<Answer>()); // 두번째 질문에 답변 추가
 		this.questionRepository.save(q2); // 두번째 질문 저장
 
 		Answer a2 = new Answer();
 		a2.setQuestion(q2);
 		a2.setContent(this.a2content);
 		a2.setCreateDate(LocalDateTime.now());
+		q2.getAnswerList().add(a2);
 		this.answerRepository.save(a2); // 두번째 질문에 답변 저장
 	}
 
@@ -134,6 +136,17 @@ class SbbApplicationTests {
 		List<Answer> all = this.answerRepository.findAll();
 		assertEquals(1, all.size());
 		Answer a2 = all.get(0);
+		assertEquals(this.a2content, a2.getContent());
+	}
+
+	@Transactional
+	@Test
+	void findAnswerByQuestion() {
+		int q2Id = this.getPrevLastId() + 2;
+		Question q = this.questionRepository.getReferenceById(q2Id);
+		List<Answer> answers = q.getAnswerList();
+		assertEquals(1, answers.size());
+		Answer a2 = answers.get(0);
 		assertEquals(this.a2content, a2.getContent());
 	}
 }
