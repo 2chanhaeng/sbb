@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @RestController
 public class QuestionController {
-    private final QuestionRepository questionRepository;
     private final QuestionService questionService;
 
     @GetMapping("/list")
@@ -27,8 +26,6 @@ public class QuestionController {
 
     @GetMapping("/details/{id}")
     public Question detail(@PathVariable Integer id, Model model) {
-        Question question = this.questionRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Question not found with id " + id));
-        return question;
+        return this.questionService.getQuestion(id);
     }
 }
