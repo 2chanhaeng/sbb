@@ -78,4 +78,10 @@ class SbbApplicationTests {
 				this.q1subject, this.q1content);
 		assertEquals(this.getPrevLastId() + 1, q.getId());
 	}
+
+	@Test
+	void findBySubjectLike() {
+		List<Question> all = this.questionRepository.findBySubjectLike("%" + this.q1subject + "%");
+		assertEquals(1, all.size());
+	}
 }
