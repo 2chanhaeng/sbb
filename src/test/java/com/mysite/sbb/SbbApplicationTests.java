@@ -61,6 +61,8 @@ class SbbApplicationTests {
 		if (oq.isPresent()) {
 			Question q = oq.get();
 			assertEquals(this.q1subject, q.getSubject());
+		} else {
+			throw new RuntimeException("질문이 없습니다.");
 		}
 	}
 
