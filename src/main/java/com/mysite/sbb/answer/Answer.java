@@ -2,6 +2,7 @@ package com.mysite.sbb.answer;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mysite.sbb.question.Question;
 
 import jakarta.persistence.Column;
@@ -27,6 +28,7 @@ public class Answer {
 
     private LocalDateTime createDate;
 
+    @JsonIgnore
     @ManyToOne
     private Question question;
 }
