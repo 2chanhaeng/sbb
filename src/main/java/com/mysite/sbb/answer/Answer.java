@@ -29,6 +29,7 @@ public class Answer {
     public Answer(String content, Question question) {
         this.content = content;
         this.question = question;
+        question.getAnswerList().add(this);
     }
 
     @Id
