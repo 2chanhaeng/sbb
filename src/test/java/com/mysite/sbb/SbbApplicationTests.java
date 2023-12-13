@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,8 +17,9 @@ class SbbApplicationTests {
 	@Autowired
 	private QuestionRepository questionRepository;
 
-	@Test
-	void testJpa() {
+	@BeforeEach
+	void setup() {
+		this.questionRepository.deleteAll();
 		Question q1 = new Question();
 		q1.setSubject("sbb가 무엇인가요?");
 		q1.setContent("sbb에 대해서 알고 싶습니다.");
