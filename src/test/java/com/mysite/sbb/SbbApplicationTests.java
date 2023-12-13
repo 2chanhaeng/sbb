@@ -102,4 +102,17 @@ class SbbApplicationTests {
 		assertNotEquals(this.q1subject, updated.getSubject());
 		assertEquals(this.q1updatedSubject, updated.getSubject());
 	}
+
+	@Test
+	void delete() {
+		assertEquals(2, this.questionRepository.count());
+		int q1Id = this.getPrevLastId() + 1;
+		Optional<Question> op = this.questionRepository.findById(q1Id);
+		assertTrue(op.isPresent());
+		Question q = op.get();
+		this.questionRepository.delete(q);
+		op = this.questionRepository.findById(q1Id);
+		assertTrue(op.isEmpty());
+		assertEquals(1, this.questionRepository.count());
+	}
 }
