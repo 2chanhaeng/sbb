@@ -1,6 +1,7 @@
 package com.mysite.sbb.question;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -18,10 +19,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 public class Question {
@@ -40,4 +43,10 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REMOVE)
     private List<Answer> answerList;
+
+    public Question(String subject, String content) {
+        this.subject = subject;
+        this.content = content;
+        this.answerList = new ArrayList<Answer>();
+    }
 }
