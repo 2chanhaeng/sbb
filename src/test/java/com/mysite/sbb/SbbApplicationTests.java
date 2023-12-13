@@ -1,6 +1,8 @@
 package com.mysite.sbb;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,6 +23,7 @@ class SbbApplicationTests {
 	private String q1content = "sbb에 대해서 알고 싶습니다.";
 	private String q2subject = "스프링부트 모델 질문입니다.";
 	private String q2content = "id는 자동으로 생성되나요?";
+	private String q1updatedSubject = "수정된 제목";
 
 	private int getPrevLastId() {
 		List<Question> all = this.questionRepository.findAll();
@@ -83,5 +86,20 @@ class SbbApplicationTests {
 	void findBySubjectLike() {
 		List<Question> all = this.questionRepository.findBySubjectLike("%" + this.q1subject + "%");
 		assertEquals(1, all.size());
+	}
+
+	@Test
+	void update() {
+		int q1Id = this.getPrevLastId() + 1;
+		Optional<Question> op = this.questionRepository.findById(q1Id);
+		assertTrue(op.isPresent());
+		Question q = op.get();
+		q.setSubject(this.q1updatedSubject);
+		this.questionRepository.save(q);
+		op = this.questionRepository.findById(q1Id);
+		assertTrue(op.isPresent());
+		Question updated = op.get();
+		assertNotEquals(this.q1subject, updated.getSubject());
+		assertEquals(this.q1updatedSubject, updated.getSubject());
 	}
 }
