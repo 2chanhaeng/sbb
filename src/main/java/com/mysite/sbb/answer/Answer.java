@@ -14,11 +14,18 @@ import jakarta.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Answer {
+    public Answer(String content, Question question) {
+        this.content = content;
+        this.question = question;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
