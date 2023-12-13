@@ -2,11 +2,15 @@ package com.mysite.sbb.answer;
 
 import java.time.LocalDateTime;
 
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mysite.sbb.question.Question;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +24,7 @@ import lombok.NoArgsConstructor;
 @Setter
 @Entity
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Answer {
     public Answer(String content, Question question) {
         this.content = content;
@@ -33,6 +38,7 @@ public class Answer {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @CreatedDate
     private LocalDateTime createDate;
 
     @JsonIgnore
