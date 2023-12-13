@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.mysite.sbb.DataNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -14,5 +16,10 @@ public class QuestionService {
 
     public List<Question> getList() {
         return this.questionRepository.findAll();
+    }
+
+    public Question getQuestion(Integer id) {
+        return this.questionRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Question not found."));
     }
 }
