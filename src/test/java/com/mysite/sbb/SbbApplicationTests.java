@@ -17,19 +17,23 @@ class SbbApplicationTests {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+	private String q1subject = "sbb가 무엇인가요?";
+	private String q1content = "sbb에 대해서 알고 싶습니다.";
+	private String q2subject = "스프링부트 모델 질문입니다.";
+	private String q2content = "id는 자동으로 생성되나요?";
 
 	@BeforeEach
 	void setup() {
 		this.questionRepository.deleteAll();
 		Question q1 = new Question();
-		q1.setSubject("sbb가 무엇인가요?");
-		q1.setContent("sbb에 대해서 알고 싶습니다.");
+		q1.setSubject(this.q1subject);
+		q1.setContent(this.q1content);
 		q1.setCreateDate(LocalDateTime.now());
 		this.questionRepository.save(q1); // 첫번째 질문 저장
 
 		Question q2 = new Question();
-		q2.setSubject("스프링부트 모델 질문입니다.");
-		q2.setContent("id는 자동으로 생성되나요?");
+		q2.setSubject(this.q2subject);
+		q2.setContent(this.q2content);
 		q2.setCreateDate(LocalDateTime.now());
 		this.questionRepository.save(q2); // 두번째 질문 저장
 	}
@@ -43,7 +47,7 @@ class SbbApplicationTests {
 	void findAll() {
 		List<Question> all = this.questionRepository.findAll();
 		Question q = all.get(0);
-		assertEquals("sbb가 무엇인가요?", q.getSubject());
+		assertEquals(this.q1subject, q.getSubject());
 	}
 
 	@Test
@@ -51,14 +55,13 @@ class SbbApplicationTests {
 		Optional<Question> oq = this.questionRepository.findById(1);
 		if (oq.isPresent()) {
 			Question q = oq.get();
-			assertEquals("sbb가 무엇인가요?", q.getSubject());
+			assertEquals(this.q1subject, q.getSubject());
 		}
 	}
 
 	@Test
 	void findBySubject() {
-		List<Question> all = this.questionRepository.findAll();
-		Question q = this.questionRepository.findBySubject("sbb가 무엇인가요?");
 		assertEquals(1, q.getId() % 2);
+		Question q = this.questionRepository.findBySubject(this.q1subject);
 	}
 }
