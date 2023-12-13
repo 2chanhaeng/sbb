@@ -17,10 +17,11 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class QuestionController {
     private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @GetMapping("/list")
     public List<Question> list() {
-        List<Question> questionList = this.questionRepository.findAll();
+        List<Question> questionList = this.questionService.getList();
         return questionList;
     }
 
