@@ -22,6 +22,11 @@ class SbbApplicationTests {
 	private String q2subject = "스프링부트 모델 질문입니다.";
 	private String q2content = "id는 자동으로 생성되나요?";
 
+	private int getPrevLastId() {
+		List<Question> all = this.questionRepository.findAll();
+		return all.get(all.size() - 1).getId() - 2;
+	}
+
 	@BeforeEach
 	void setup() {
 		this.questionRepository.deleteAll();
@@ -46,13 +51,13 @@ class SbbApplicationTests {
 	@Test
 	void findAll() {
 		List<Question> all = this.questionRepository.findAll();
-		Question q = all.get(0);
+		Question q = all.get(all.size() - 2);
 		assertEquals(this.q1subject, q.getSubject());
 	}
 
 	@Test
 	void findById() {
-		Optional<Question> oq = this.questionRepository.findById(1);
+		Optional<Question> oq = this.questionRepository.findById(this.getPrevLastId() + 1);
 		if (oq.isPresent()) {
 			Question q = oq.get();
 			assertEquals(this.q1subject, q.getSubject());
@@ -61,7 +66,8 @@ class SbbApplicationTests {
 
 	@Test
 	void findBySubject() {
-		assertEquals(1, q.getId() % 2);
 		Question q = this.questionRepository.findBySubject(this.q1subject);
+		assertEquals(this.getPrevLastId() + 1, q.getId());
+	}
 	}
 }
