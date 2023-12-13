@@ -1,5 +1,7 @@
 package com.mysite.sbb.question;
 
+import com.mysite.sbb.DataNotFoundException;
+
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +24,8 @@ public class QuestionController {
 
     @GetMapping("/question/details/{id}")
     public Question detail(@PathVariable Integer id, Model model) {
-        Question question = this.questionRepository.findById(id).orElse(null);
+        Question question = this.questionRepository.findById(id)
+                .orElseThrow(() -> new DataNotFoundException("Question not found with id " + id));
         return question;
     }
 }
