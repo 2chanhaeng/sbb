@@ -7,23 +7,30 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 class SbbApplicationTests {
 
 	@Autowired
 	private QuestionRepository questionRepository;
+
+	@Autowired
+	private AnswerRepository answerRepository;
+
 	private String q1subject = "sbb가 무엇인가요?";
 	private String q1content = "sbb에 대해서 알고 싶습니다.";
 	private String q2subject = "스프링부트 모델 질문입니다.";
 	private String q2content = "id는 자동으로 생성되나요?";
 	private String q1updatedSubject = "수정된 제목";
+	private String a2content = "네 자동으로 생성됩니다.";
 
 	private int getPrevLastId() {
 		List<Question> all = this.questionRepository.findAll();
@@ -44,6 +51,12 @@ class SbbApplicationTests {
 		q2.setContent(this.q2content);
 		q2.setCreateDate(LocalDateTime.now());
 		this.questionRepository.save(q2); // 두번째 질문 저장
+
+		Answer a2 = new Answer();
+		a2.setQuestion(q2);
+		a2.setContent(this.a2content);
+		a2.setCreateDate(LocalDateTime.now());
+		this.answerRepository.save(a2); // 두번째 질문에 답변 저장
 	}
 
 	@AfterEach
@@ -114,5 +127,13 @@ class SbbApplicationTests {
 		op = this.questionRepository.findById(q1Id);
 		assertTrue(op.isEmpty());
 		assertEquals(1, this.questionRepository.count());
+	}
+
+	@Test
+	void findAnswerById() {
+		List<Answer> all = this.answerRepository.findAll();
+		assertEquals(1, all.size());
+		Answer a2 = all.get(0);
+		assertEquals(this.a2content, a2.getContent());
 	}
 }
