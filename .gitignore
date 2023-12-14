@@ -38,3 +38,6 @@ out/
 
 # DB
 *.db
+
+# Gradle
+resources*/
