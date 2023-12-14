@@ -26,7 +26,7 @@ public class QuestionInitializer implements ApplicationRunner {
 
     private void initializeDB() {
         this.questionService.deleteAll();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 300; i++) {
             Question question = new Question(
                     String.format("Question subject %03d", i),
                     String.format("Question content %03d", i));
