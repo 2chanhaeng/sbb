@@ -44,3 +44,8 @@ tasks {
 		duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
 	}
 }
+
+bootRun {
+    String activeProfile = System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
+}
