@@ -26,4 +26,15 @@ public class QuestionService {
     public Question create(Question question) {
         return this.questionRepository.save(question);
     }
+
+    public Question deleteAll() {
+        this.questionRepository.deleteAll();
+        return null;
+    }
+
+    public Question delete(Integer id) {
+        Question question = this.getQuestion(id);
+        this.questionRepository.delete(question);
+        return question;
+    }
 }
