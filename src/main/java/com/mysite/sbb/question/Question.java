@@ -49,4 +49,8 @@ public class Question {
         this.content = content;
         this.answerList = new ArrayList<Answer>();
     }
+
+    public QuestionCreatedDTO toCreatedDTO() {
+        return new QuestionCreatedDTO(this);
+    }
 }
